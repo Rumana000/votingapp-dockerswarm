@@ -1,21 +1,67 @@
-This repository contains a Python and Node.js based Voting App, designed to demonstrate the deployment and orchestration of a multi-service application using Docker Swarm.
+# **🌓 Voting App - Docker Swarm Deployment**
 
-OVERVIEW
-Voting Application: Developed using Python, this app allows users to cast their votes. The application is deployed with 2 replicas to ensure load balancing and high availability.
+## **📌 Overview**  
+This repository contains a **Python & Node.js-based Voting Application**, designed to demonstrate how to deploy and orchestrate a multi-service application using **Docker Swarm**.  
 
-Redis Database: Utilized Redis to manage and store voting information efficiently.
+## **🏢 Architecture**  
+The application consists of multiple services working together:  
 
-Worker Application: A .NET Worker application orchestrates the data transfer from Redis, processing the votes and storing the results in a Postgres database.
+### **1️⃣ Voting App (`voting_app`)**  
+- Developed in **Python (Flask)**.  
+- Allows users to **cast their votes**.  
+- Deployed with **2 replicas** for **load balancing** and **high availability**.  
 
-Result Display: The application retrieves the results from Postgres and displays them to the users.
+### **2️⃣ Redis Database (`my-redis`)**  
+- Stores **voting data** temporarily before processing.  
+- Provides quick retrieval and efficient vote management.  
 
-Services
-The application comprises the following services:
+### **3️⃣ Worker Application (`worker`)**  
+- Built using **.NET**.  
+- Retrieves votes from **Redis**, processes them, and stores the results in **PostgreSQL**.  
 
-voting_app: The main voting interface where users can cast their votes.
-my-redis: The Redis database for storing voting data.
-worker: A .NET application that processes the votes from Redis and stores them in Postgres.
-my-postgres: The Postgres database for storing the processed vote results.
-result-app: The application interface for displaying the voting results.
-Deployment
+### **4️⃣ PostgreSQL Database (`my-postgres`)**  
+- Stores the **processed voting results** permanently.  
+
+### **5️⃣ Result Display App (`result-app`)**  
+- Retrieves the **final voting results** from **Postgres**.  
+- Displays **real-time voting results** to users.  
+
+---
+
+## **🚀 Deployment using Docker Swarm**  
+
+### **1️⃣ Initialize Docker Swarm**  
+```sh
+docker swarm init
+```
+
+### **2️⃣ Deploy the Application Stack**  
+Run the following command to deploy the application:  
+```sh
+docker stack deploy -c docker-compose.yml voting_app
+```
+
+### **3️⃣ Verify Running Services**  
+Check if all services are running correctly:  
+```sh
+docker service ls
+```
+
+### **4️⃣ Access the Application**  
+- **Voting App:** `http://<swarm-manager-ip>:5000`  
+- **Result Display:** `http://<swarm-manager-ip>:5001`  
+
+---
+
+## **⚙️ Technologies Used**  
+- **Backend:** Python (Flask), Node.js  
+- **Database:** Redis, PostgreSQL  
+- **Orchestration:** Docker Swarm  
+- **Worker Service:** .NET  
+- **Frontend:** HTML/CSS for voting and results display  
+
+---
+
+## **📜 License**  
+This project is for **learning and demonstration purposes**.  
 
